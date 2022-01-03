@@ -67,16 +67,16 @@ def hessian_point(I, sigma):
     det = sigma**4*(Ixx*Iyy-Ixy**2)
     return det
 
-# I = cv2.cvtColor(cv2.imread('data/graf/graf1.jpg'), cv2.COLOR_BGR2GRAY).astype(float)
-# Is = gaussfilter(I.copy())
-# hessian = hessian_point(Is.copy(), 3)
-# x_cord, y_cord = nms(hessian.copy(), 15000)
-# plt.subplot(1,2,1)
-# plt.imshow(hessian, cmap='gray')
-# plt.subplot(1,2,2)
-# plt.imshow(I, cmap='gray')
-# plt.scatter(y_cord, x_cord, marker='x', color='red')
-# plt.show()
+I = cv2.cvtColor(cv2.imread('data/graf/graf1.jpg'), cv2.COLOR_BGR2GRAY).astype(float)
+Is = gaussfilter(I.copy())
+hessian = hessian_point(Is.copy(), 3)
+x_cord, y_cord = nms(hessian.copy(), 15000)
+plt.subplot(1,2,1)
+plt.imshow(hessian, cmap='gray')
+plt.subplot(1,2,2)
+plt.imshow(I, cmap='gray')
+plt.scatter(y_cord, x_cord, marker='x', color='red')
+plt.show()
 
 # 1b)
 def nms_harris(I, thresh, det, trace):
@@ -124,13 +124,13 @@ def harris_point(I, sigma):
     trace = ele11+ele22
     return det, trace
 
-# I = cv2.cvtColor(cv2.imread('data/graf/graf1.jpg'), cv2.COLOR_BGR2GRAY).astype(float)
-# Is = gaussfilter(I.copy())
-# det, trace = harris_point(Is.copy(), 3)
-# x_cord, y_cord = nms_harris(Is.copy(), 100000000, det, trace**2)
-# plt.imshow(I, cmap='gray')
-# plt.scatter(y_cord, x_cord, marker='x', color='blue')
-# plt.show()
+I = cv2.cvtColor(cv2.imread('data/graf/graf1.jpg'), cv2.COLOR_BGR2GRAY).astype(float)
+Is = gaussfilter(I.copy())
+det, trace = harris_point(Is.copy(), 3)
+x_cord, y_cord = nms_harris(Is.copy(), 100000000, det, trace**2)
+plt.imshow(I, cmap='gray')
+plt.scatter(y_cord, x_cord, marker='x', color='blue')
+plt.show()
 
 #### TASK 2 ####
 # 2a
@@ -174,14 +174,14 @@ def nms2(I, thresh):
                     coordinates.append((j, i))
     return coordinates
 
-# I = cv2.cvtColor(cv2.imread('data/graf/graf1.jpg'), cv2.COLOR_BGR2GRAY)
-# I2 = cv2.cvtColor(cv2.imread('data/graf/graf2.jpg'), cv2.COLOR_BGR2GRAY)
-# points = nms2(hessian_point(I, 3), 254)
-# points2 = nms2(hessian_point(I2, 3), 254)
-# descriptors = utils.simple_descriptors(I, points)
-# descriptors2 = utils.simple_descriptors(I2, points2)
-# matches = find_correspondences(descriptors, descriptors2)
-# utils.display_matches(I, I2, points, points2, matches)
+I = cv2.cvtColor(cv2.imread('data/graf/graf1.jpg'), cv2.COLOR_BGR2GRAY)
+I2 = cv2.cvtColor(cv2.imread('data/graf/graf2.jpg'), cv2.COLOR_BGR2GRAY)
+points = nms2(hessian_point(I, 3), 254)
+points2 = nms2(hessian_point(I2, 3), 254)
+descriptors = utils.simple_descriptors(I, points)
+descriptors2 = utils.simple_descriptors(I2, points2)
+matches = find_correspondences(descriptors, descriptors2)
+utils.display_matches(I, I2, points, points2, matches)
 
 # 2c)
 def find_matches(I, I2):
@@ -198,10 +198,10 @@ def find_matches(I, I2):
     matches = set(matches1).intersection(matches2)
     return matches, points, points2
 
-# I = cv2.cvtColor(cv2.imread('data/graf/graf1.jpg'), cv2.COLOR_BGR2GRAY)
-# I2 = cv2.cvtColor(cv2.imread('data/graf/graf2.jpg'), cv2.COLOR_BGR2GRAY)
-# matches, points, points2 = find_matches(I, I2)
-# utils.display_matches(I, I2, points, points2, matches)
+I = cv2.cvtColor(cv2.imread('data/graf/graf1.jpg'), cv2.COLOR_BGR2GRAY)
+I2 = cv2.cvtColor(cv2.imread('data/graf/graf2.jpg'), cv2.COLOR_BGR2GRAY)
+matches, points, points2 = find_matches(I, I2)
+utils.display_matches(I, I2, points, points2, matches)
 
 # 2d)
 ### DOLGO RAČUNA, SHRANJENA SLIKA -> PRILAGODI PARAMETRE (3, 220) ter SPREMENI KLIC find_corr2 v find_matches!!! ###
@@ -221,10 +221,10 @@ def find_correspondences2(d1, d2):
             most_similar.append((i, j1))
     return most_similar
 
-# I = cv2.cvtColor(cv2.imread('data/graf/graf1.jpg'), cv2.COLOR_BGR2GRAY)
-# I2 = cv2.cvtColor(cv2.imread('data/graf/graf2.jpg'), cv2.COLOR_BGR2GRAY)
-# matches, points, points2 = find_matches(I, I2)
-# utils.display_matches(I, I2, points, points2, matches)
+I = cv2.cvtColor(cv2.imread('data/graf/graf1.jpg'), cv2.COLOR_BGR2GRAY)
+I2 = cv2.cvtColor(cv2.imread('data/graf/graf2.jpg'), cv2.COLOR_BGR2GRAY)
+matches, points, points2 = find_matches(I, I2)
+utils.display_matches(I, I2, points, points2, matches)
 
 # 2f)
 # video = cv2.VideoCapture('data/video.mp4')
@@ -259,14 +259,14 @@ def estimate_homography(pairs):
     return H
 
 # 3b)
-# I = cv2.cvtColor(cv2.imread('data/newyork/newyork1.jpg'), cv2.COLOR_BGR2GRAY)
-# I2 = cv2.cvtColor(cv2.imread('data/newyork/newyork2.jpg'), cv2.COLOR_BGR2GRAY)
-# pairs = utils.read_data('data/newyork/newyork.txt')
-# pairs = pairs.reshape(-1, 4)
-# H = estimate_homography(pairs)
-# H = cv2.warpPerspective(src=I2,M=H,dsize=(250,250))
-# plt.imshow(H, cmap='gray')
-# plt.show()
+I = cv2.cvtColor(cv2.imread('data/newyork/newyork1.jpg'), cv2.COLOR_BGR2GRAY)
+I2 = cv2.cvtColor(cv2.imread('data/newyork/newyork2.jpg'), cv2.COLOR_BGR2GRAY)
+pairs = utils.read_data('data/newyork/newyork.txt')
+pairs = pairs.reshape(-1, 4)
+H = estimate_homography(pairs)
+H = cv2.warpPerspective(src=I2,M=H,dsize=(250,250))
+plt.imshow(H, cmap='gray')
+plt.show()
 
 # 3c)
 def find_correspondences3(d1, d2):
@@ -317,18 +317,18 @@ def estimate_homography2(pairs, pts1, pts2):
     H = (h/h[-1]).reshape(3,3)
     return H
 
-# I = cv2.cvtColor(cv2.imread('data/graf/graf1.jpg'), cv2.COLOR_BGR2GRAY)
-# I2 = cv2.cvtColor(cv2.imread('data/graf/graf2.jpg'), cv2.COLOR_BGR2GRAY)
+I = cv2.cvtColor(cv2.imread('data/graf/graf1.jpg'), cv2.COLOR_BGR2GRAY)
+I2 = cv2.cvtColor(cv2.imread('data/graf/graf2.jpg'), cv2.COLOR_BGR2GRAY)
 
-# matches, pts, pts2 = find_matches2(I, I2)
-# pts1_ix = [x[0] for x in matches]
-# pts2_ix = [x[1] for x in matches]
-# pts = np.array([pts[x] for x in pts1_ix])
-# pts2 = np.array([pts2[x] for x in pts2_ix])
-# H = estimate_homography2(matches, pts, pts2)
-# H = cv2.warpPerspective(src=I2,M=H,dsize=(800,640))
-# plt.imshow(H, cmap='gray')
-# plt.show()
+matches, pts, pts2 = find_matches2(I, I2)
+pts1_ix = [x[0] for x in matches]
+pts2_ix = [x[1] for x in matches]
+pts = np.array([pts[x] for x in pts1_ix])
+pts2 = np.array([pts2[x] for x in pts2_ix])
+H = estimate_homography2(matches, pts, pts2)
+H = cv2.warpPerspective(src=I2,M=H,dsize=(800,640))
+plt.imshow(H, cmap='gray')
+plt.show()
 
 # 3e)
 def postprocess(I):

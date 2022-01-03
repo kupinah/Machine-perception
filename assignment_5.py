@@ -51,13 +51,13 @@ def disparity(I1, I2):
             disparity_matrix[i, j] = max_pixel-i
     return disparity_matrix
 
-# I1 = cv2.imread('data/disparity/slika1.png')
-# I2 = cv2.imread('data/disparity/slika2.png')
-# disparity_matrix1 = disparity(I1, I2)
-# disparity_matrix2 = disparity(I2, I1)
-# matrix = (disparity_matrix1 + disparity_matrix2)/2
-# plt.imshow(matrix, cmap='gray')
-# plt.show()
+I1 = cv2.imread('data/disparity/slika1.png')
+I2 = cv2.imread('data/disparity/slika2.png')
+disparity_matrix1 = disparity(I1, I2)
+disparity_matrix2 = disparity(I2, I1)
+matrix = (disparity_matrix1 + disparity_matrix2)/2
+plt.imshow(matrix, cmap='gray')
+plt.show()
 
 #### TASK 2 ####
 # 2a)
@@ -108,11 +108,11 @@ def fundamental_matrix(pairs):
     return F
 
 # 2b)
-# I1 = cv2.imread('data/epipolar/house1.jpg')
-# I2 = cv2.imread('data/epipolar/house2.jpg')
-# pairs = utils.read_data('data/epipolar/house_points.txt').reshape(10,4)
-# F = fundamental_matrix(pairs)
-# get_epiline(F, pairs, I1, I2)
+I1 = cv2.imread('data/epipolar/house1.jpg')
+I2 = cv2.imread('data/epipolar/house2.jpg')
+pairs = utils.read_data('data/epipolar/house_points.txt').reshape(10,4)
+F = fundamental_matrix(pairs)
+get_epiline(F, pairs, I1, I2)
 
 # 2c)
 def get_distance(point, params):
@@ -136,10 +136,10 @@ def reprojection_error(pairs, F):
         errors = np.append(errors, avg_distance)
     return np.sum(errors)/errors.shape[0]
 
-# pairs = utils.read_data('data/epipolar/house_points.txt').reshape(10,4)
-# F = fundamental_matrix(pairs)
-# error = reprojection_error(pairs, F)
-# print(error)
+pairs = utils.read_data('data/epipolar/house_points.txt').reshape(10,4)
+F = fundamental_matrix(pairs)
+error = reprojection_error(pairs, F)
+print(error)
 
 # 2d)
 def get_inliers(F, pairs, thresh):
@@ -159,10 +159,10 @@ def get_inliers(F, pairs, thresh):
         inliers = np.delete(inliers, 2, axis=1)
     return inliers
 
-# pairs = utils.read_data('data/epipolar/house_matches.txt').reshape(168, 4)
-# F = fundamental_matrix(pairs)
-# inliers = get_inliers(F, pairs, 100)
-# print(inliers)
+pairs = utils.read_data('data/epipolar/house_matches.txt').reshape(168, 4)
+F = fundamental_matrix(pairs)
+inliers = get_inliers(F, pairs, 100)
+print(inliers)
 
 # 2e)
 def draw_inliers(pairs, F, I1, I2, inliers, percentage):
@@ -206,11 +206,11 @@ def ransac_fundamental(pairs, e, k):
             return F, inliers, percentage
     return F, inliers, percentage
 
-# pairs = utils.read_data('data/epipolar/house_matches.txt').reshape(168, 4)
-# F, inliers, percentage = ransac_fundamental(pairs, 0.70, 500)
-# I1 = cv2.imread('data/epipolar/house1.jpg')
-# I2 = cv2.imread('data/epipolar/house2.jpg')
-# draw_inliers(pairs, F, I1, I2, inliers, percentage)
+pairs = utils.read_data('data/epipolar/house_matches.txt').reshape(168, 4)
+F, inliers, percentage = ransac_fundamental(pairs, 0.70, 500)
+I1 = cv2.imread('data/epipolar/house1.jpg')
+I2 = cv2.imread('data/epipolar/house2.jpg')
+draw_inliers(pairs, F, I1, I2, inliers, percentage)
 
 # 2f)
 def simple_descriptors(I, pts, bins=150, rad=120, w=11):
@@ -375,12 +375,12 @@ def find_matches(I, I2):
     matches = np.concatenate((pts1, pts2), axis=1)
     return matches, pts1, pts2
 
-# I1 = cv2.cvtColor(cv2.imread('data/epipolar/house1.jpg'), cv2.COLOR_BGR2GRAY)
-# I2 = cv2.cvtColor(cv2.imread('data/epipolar/house2.jpg'), cv2.COLOR_BGR2GRAY)
-# matches, points, points2 = find_matches(I1, I2)
-# pairs = np.concatenate((points, points2), axis=1)
-# F, inliers, percentage = ransac_fundamental(pairs, 0.75, 100)
-# draw_inliers(pairs, F, I1, I2, inliers, percentage)
+I1 = cv2.cvtColor(cv2.imread('data/epipolar/house1.jpg'), cv2.COLOR_BGR2GRAY)
+I2 = cv2.cvtColor(cv2.imread('data/epipolar/house2.jpg'), cv2.COLOR_BGR2GRAY)
+matches, points, points2 = find_matches(I1, I2)
+pairs = np.concatenate((points, points2), axis=1)
+F, inliers, percentage = ransac_fundamental(pairs, 0.75, 100)
+draw_inliers(pairs, F, I1, I2, inliers, percentage)
 
 #### TASK 3 ####
 # 3a)
@@ -409,17 +409,17 @@ def triangulate(pairs, cal_mat1, cal_mat2):
         res = np.append(res, lowestEigenVector)
     return res
 
-# pairs = utils.read_data('data/epipolar/house_points.txt').reshape(10,4)
-# calibrate_matrix1 = utils.read_data('data/epipolar/house1_camera.txt').reshape(3,4)
-# calibrate_matrix2 = utils.read_data('data/epipolar/house2_camera.txt').reshape(3,4)
-# res = triangulate(pairs, calibrate_matrix1, calibrate_matrix2).reshape(10,4)
-# res = np.delete(res, -1, axis=1)
+pairs = utils.read_data('data/epipolar/house_points.txt').reshape(10,4)
+calibrate_matrix1 = utils.read_data('data/epipolar/house1_camera.txt').reshape(3,4)
+calibrate_matrix2 = utils.read_data('data/epipolar/house2_camera.txt').reshape(3,4)
+res = triangulate(pairs, calibrate_matrix1, calibrate_matrix2).reshape(10,4)
+res = np.delete(res, -1, axis=1)
 
-# fig = plt.figure()
-# ax = fig.add_subplot(111, projection='3d') # define 3D subplot
-# T = np.array([[-1,0,0],[0,0,1],[0,-1,0]]) # transformation matrix
-# res = np.dot(res,T)
-# for i, pt in enumerate(res):
-#     plt.plot([pt[0]],[pt[1]],[pt[2]],'r.') # plot points
-#     ax.text(pt[0],pt[1],pt[2], str(i)) # plot indices
-# plt.show()
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d') # define 3D subplot
+T = np.array([[-1,0,0],[0,0,1],[0,-1,0]]) # transformation matrix
+res = np.dot(res,T)
+for i, pt in enumerate(res):
+    plt.plot([pt[0]],[pt[1]],[pt[2]],'r.') # plot points
+    ax.text(pt[0],pt[1],pt[2], str(i)) # plot indices
+plt.show()

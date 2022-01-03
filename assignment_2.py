@@ -96,12 +96,12 @@ def convolution2(I, k):
         value = I[i:i+len(k)]
         convolution.append(np.dot(value, k))
 
-# def gaussian_kernel(sigma, x):
-#     kernel = []
-#     for i in range(-x, x, 1):
-#         g = 1/(math.sqrt(2*math.pi)*sigma)*np.exp(-((i**2)/(2*sigma**2)))
-#         kernel.append(g)
-#     return (kernel/np.sum(kernel))
+def gaussian_kernel(sigma, x):
+    kernel = []
+    for i in range(-x, x, 1):
+        g = 1/(math.sqrt(2*math.pi)*sigma)*np.exp(-((i**2)/(2*sigma**2)))
+        kernel.append(g)
+    return (kernel/np.sum(kernel))
 
 def median(I, w):
     pos = int(w/2)
@@ -136,128 +136,128 @@ def images(path, n):
 
 ##### TASK 1 #####
 # 1a) 
-# img = cv2.imread('C:/Users/Uporabnik/Documents/3. letnik/UZ/assignment_2/images/cat1.jpg')
-# myhist3(img, 256)
+img = cv2.imread('C:/Users/Uporabnik/Documents/3. letnik/UZ/assignment_2/images/cat1.jpg')
+myhist3(img, 256)
 
 # 1b)
-# img = cv2.imread('C:/Users/Uporabnik/Documents/3. letnik/UZ/assignment_2/images/cat1.jpg')
-# img2 = cv2.imread('C:/Users/Uporabnik/Documents/3. letnik/UZ/assignment_2/images/cat2.jpg')
+img = cv2.imread('C:/Users/Uporabnik/Documents/3. letnik/UZ/assignment_2/images/cat1.jpg')
+img2 = cv2.imread('C:/Users/Uporabnik/Documents/3. letnik/UZ/assignment_2/images/cat2.jpg')
 
-# n = 20
-# compare_histograms(myhist3(img, n), myhist3(img, n), "chi")
+n = 20
+compare_histograms(myhist3(img, n), myhist3(img, n), "chi")
 
 # 1 c)
-# n = 8
-# img1 = cv2.imread('C:/Users/Uporabnik/Documents/3. letnik/UZ/assignment_2/dataset/object_01_1.png')
-# img2 = cv2.imread('C:/Users/Uporabnik/Documents/3. letnik/UZ/assignment_2/dataset/object_02_1.png')
-# img3 = cv2.imread('C:/Users/Uporabnik/Documents/3. letnik/UZ/assignment_2/dataset/object_03_1.png')
-# h1 = myhist3(img1, n).reshape(-1)
-# h2 = myhist3(img2, n).reshape(-1)
-# h3 = myhist3(img3, n).reshape(-1)
+n = 8
+img1 = cv2.imread('C:/Users/Uporabnik/Documents/3. letnik/UZ/assignment_2/dataset/object_01_1.png')
+img2 = cv2.imread('C:/Users/Uporabnik/Documents/3. letnik/UZ/assignment_2/dataset/object_02_1.png')
+img3 = cv2.imread('C:/Users/Uporabnik/Documents/3. letnik/UZ/assignment_2/dataset/object_03_1.png')
+h1 = myhist3(img1, n).reshape(-1)
+h2 = myhist3(img2, n).reshape(-1)
+h3 = myhist3(img3, n).reshape(-1)
 
-# plt.subplot(2,3,1)
-# plt.imshow(cv2.cvtColor(img1, cv2.COLOR_BGR2RGB))
-# plt.subplot(2,3,2)
-# plt.imshow(cv2.cvtColor(img2, cv2.COLOR_BGR2RGB))
-# plt.subplot(2,3,3)
-# plt.imshow(cv2.cvtColor(img3, cv2.COLOR_BGR2RGB))
-# plt.subplot(2,3,4)
-# plt.title(round(compare_histograms(h1, h1, "L2"), 7))
-# plt.plot(h1)
-# plt.subplot(2,3,5)
-# plt.title(round(compare_histograms(h1, h2, "L2"), 7))
-# plt.plot(h2)
-# plt.subplot(2,3,6)
-# plt.title(round(compare_histograms(h1, h3, "L2"), 7))
-# plt.plot(h3)
-# plt.show()
+plt.subplot(2,3,1)
+plt.imshow(cv2.cvtColor(img1, cv2.COLOR_BGR2RGB))
+plt.subplot(2,3,2)
+plt.imshow(cv2.cvtColor(img2, cv2.COLOR_BGR2RGB))
+plt.subplot(2,3,3)
+plt.imshow(cv2.cvtColor(img3, cv2.COLOR_BGR2RGB))
+plt.subplot(2,3,4)
+plt.title(round(compare_histograms(h1, h1, "L2"), 7))
+plt.plot(h1)
+plt.subplot(2,3,5)
+plt.title(round(compare_histograms(h1, h2, "L2"), 7))
+plt.plot(h2)
+plt.subplot(2,3,6)
+plt.title(round(compare_histograms(h1, h3, "L2"), 7))
+plt.plot(h3)
+plt.show()
 
 # 1d)
 histograms = []
 names = []
 
-# n = 50
-# path = 'C:/Users/Uporabnik/Documents/3. letnik/UZ/assignment_2/dataset'
-# distancesL2 = []
-# distancesCHI = []
-# distancesIS = []
-# distancesH = []
-# listL2 = []
-# listCHI = []
-# listIS = []
-# listH = []
-# images(path, n)
-# orig_image = cv2.imread(path + '/' + "object_05_1.png")
-# OI_his = myhist3(orig_image, n).reshape(-1)
+n = 50
+path = 'C:/Users/Uporabnik/Documents/3. letnik/UZ/assignment_2/dataset'
+distancesL2 = []
+distancesCHI = []
+distancesIS = []
+distancesH = []
+listL2 = []
+listCHI = []
+listIS = []
+listH = []
+images(path, n)
+orig_image = cv2.imread(path + '/' + "object_05_1.png")
+OI_his = myhist3(orig_image, n).reshape(-1)
 
-# for i in histograms:
-#     # distancesL2.append(compare_histograms(OI_his, i, "L2"))
-#     # distancesCHI.append(compare_histograms(OI_his, i, "chi"))
-#     # distancesIS.append(compare_histograms(OI_his, i, "intersection"))
-#     distancesH.append(compare_histograms(OI_his, i, "hellinger"))
+for i in histograms:
+    # distancesL2.append(compare_histograms(OI_his, i, "L2"))
+    # distancesCHI.append(compare_histograms(OI_his, i, "chi"))
+    # distancesIS.append(compare_histograms(OI_his, i, "intersection"))
+    distancesH.append(compare_histograms(OI_his, i, "hellinger"))
 
-# for i in range(len(histograms)):
-#     # triple = (names[i], histograms[i], distancesL2[i])
-#     # listL2.append(triple)
-#     # triple = (names[i], histograms[i], distancesCHI[i])
-#     # listCHI.append(triple)
-#     # triple = (names[i], histograms[i], distancesIS[i])
-#     # listIS.append(triple)
-#     triple = (names[i], histograms[i], distancesH[i])
-#     listH.append(triple)
+for i in range(len(histograms)):
+    # triple = (names[i], histograms[i], distancesL2[i])
+    # listL2.append(triple)
+    # triple = (names[i], histograms[i], distancesCHI[i])
+    # listCHI.append(triple)
+    # triple = (names[i], histograms[i], distancesIS[i])
+    # listIS.append(triple)
+    triple = (names[i], histograms[i], distancesH[i])
+    listH.append(triple)
 
-# # sortedL2 = sorted(listL2, key=itemgetter(2))
-# # sortedCHI = sorted(listCHI, key=itemgetter(2))
-# # sortedIS = sorted(listIS, key=itemgetter(2))
-# sortedH = sorted(listH, key=itemgetter(2))
+# sortedL2 = sorted(listL2, key=itemgetter(2))
+# sortedCHI = sorted(listCHI, key=itemgetter(2))
+# sortedIS = sorted(listIS, key=itemgetter(2))
+sortedH = sorted(listH, key=itemgetter(2))
 
-# # sortedL2_img = [path+"/" + x[0] for x in sortedL2[:6]]
-# # sortedL2_hist = [x[1] for x in sortedL2[:6]]
+# sortedL2_img = [path+"/" + x[0] for x in sortedL2[:6]]
+# sortedL2_hist = [x[1] for x in sortedL2[:6]]
 
-# # sortedCHI_img = [path+"/" + x[0] for x in sortedCHI[:6]]
-# # sortedCHI_hist = [x[1] for x in sortedCHI[:6]]
+# sortedCHI_img = [path+"/" + x[0] for x in sortedCHI[:6]]
+# sortedCHI_hist = [x[1] for x in sortedCHI[:6]]
 
-# # sortedIS_img = [path+"/" + x[0] for x in sortedIS[:6]]
-# # sortedIS_hist = [x[1] for x in sortedIS[:6]]
+# sortedIS_img = [path+"/" + x[0] for x in sortedIS[:6]]
+# sortedIS_hist = [x[1] for x in sortedIS[:6]]
 
-# sortedH_img = [path+"/" + x[0] for x in sortedH[:6]]
-# sortedH_hist = [x[1] for x in sortedH[:6]]
+sortedH_img = [path+"/" + x[0] for x in sortedH[:6]]
+sortedH_hist = [x[1] for x in sortedH[:6]]
 
-# for i in range(6):
-#     plt.subplot(2,6,i+1)
-#     # img = cv2.imread(sortedL2_img[i])
-#     # img = cv2.imread(sortedCHI_img[i])
-#     # img = cv2.imread(sortedIS_img[i])
-#     img = cv2.imread(sortedH_img[i])
-#     plt.imshow(img)
-#     plt.subplot(2,6,i+6+1)
-#     # plt.plot(sortedL2_hist[i])
-#     # plt.plot(sortedCHI_hist[i])
-#     # plt.plot(sortedIS_hist[i])
-#     plt.plot(sortedH_hist[i])
-# plt.show()
+for i in range(6):
+    plt.subplot(2,6,i+1)
+    # img = cv2.imread(sortedL2_img[i])
+    # img = cv2.imread(sortedCHI_img[i])
+    # img = cv2.imread(sortedIS_img[i])
+    img = cv2.imread(sortedH_img[i])
+    plt.imshow(img)
+    plt.subplot(2,6,i+6+1)
+    # plt.plot(sortedL2_hist[i])
+    # plt.plot(sortedCHI_hist[i])
+    # plt.plot(sortedIS_hist[i])
+    plt.plot(sortedH_hist[i])
+plt.show()
 
 # 1e)
-# n = 8
-# path = 'C:/Users/Uporabnik/Documents/3. letnik/UZ/assignment_2/dataset'
-# distances = []
-# orig_image = cv2.imread(path + '/' + "object_05_1.png")
-# OI_his = myhist3(orig_image, n).reshape(-1)
-# images(path, n)
-# for i in histograms:
-#     distances.append(compare_histograms(OI_his, i, "hellinger"))
-# plt.subplot(1,2,1)
-# plt.plot(distances)
-# indices = sorted(distances)[:6]
-# for i in indices:
-#     plt.plot(distances.index(i), i, 'ro', mfc='none')
-# distances.sort()
-# plt.subplot(1,2,2)
-# plt.plot(distances)
-# indices = distances[:6]
-# for i in indices:
-#     plt.plot(distances.index(i), i, 'ro', mfc='none')
-# plt.show()
+n = 8
+path = 'C:/Users/Uporabnik/Documents/3. letnik/UZ/assignment_2/dataset'
+distances = []
+orig_image = cv2.imread(path + '/' + "object_05_1.png")
+OI_his = myhist3(orig_image, n).reshape(-1)
+images(path, n)
+for i in histograms:
+    distances.append(compare_histograms(OI_his, i, "hellinger"))
+plt.subplot(1,2,1)
+plt.plot(distances)
+indices = sorted(distances)[:6]
+for i in indices:
+    plt.plot(distances.index(i), i, 'ro', mfc='none')
+distances.sort()
+plt.subplot(1,2,2)
+plt.plot(distances)
+indices = distances[:6]
+for i in indices:
+    plt.plot(distances.index(i), i, 'ro', mfc='none')
+plt.show()
 
 # 1f)
 n = 8
@@ -303,124 +303,124 @@ plt.show()
 path = 'C:/Users/Uporabnik/Documents/3. letnik/UZ/assignment_2/'
 convolution = []
 
-# signal = util.read_data(path + "signal.txt")
-# kernel = util.read_data(path + "kernel.txt")
-# simple_convolution(signal, kernel)
-# plt.plot(signal)
-# plt.plot(kernel)
-# plt.plot(convolution)
-# plt.show()
+signal = util.read_data(path + "signal.txt")
+kernel = util.read_data(path + "kernel.txt")
+simple_convolution(signal, kernel)
+plt.plot(signal)
+plt.plot(kernel)
+plt.plot(convolution)
+plt.show()
 
 # 2c)
-# signal = np.array(util.read_data(path + "signal.txt"))
-# kernel = util.read_data(path + "kernel.txt")
-# signalP = np.copy(signal)
-# signalP = np.insert(signalP, 0, [0, 0, 0, 0, 0, 0])
-# signalP = np.insert(signalP, len(signalP), [0, 0, 0, 0, 0, 0])
-# convolution2(signalP, kernel)
-# plt.plot(signal)
-# plt.plot(kernel)
-# plt.plot(convolution)
-# plt.show()
+signal = np.array(util.read_data(path + "signal.txt"))
+kernel = util.read_data(path + "kernel.txt")
+signalP = np.copy(signal)
+signalP = np.insert(signalP, 0, [0, 0, 0, 0, 0, 0])
+signalP = np.insert(signalP, len(signalP), [0, 0, 0, 0, 0, 0])
+convolution2(signalP, kernel)
+plt.plot(signal)
+plt.plot(kernel)
+plt.plot(convolution)
+plt.show()
 
 # 2d)
-# plt.plot(gaussian_kernel(0.5, 15))
-# plt.plot(gaussian_kernel(1, 15))
-# plt.plot(gaussian_kernel(2, 15))
-# plt.plot(gaussian_kernel(3, 15))
-# plt.plot(gaussian_kernel(4, 15))
-# plt.show()
+plt.plot(gaussian_kernel(0.5, 15))
+plt.plot(gaussian_kernel(1, 15))
+plt.plot(gaussian_kernel(2, 15))
+plt.plot(gaussian_kernel(3, 15))
+plt.plot(gaussian_kernel(4, 15))
+plt.show()
 
 # 2e)
-# signal = util.read_data('C:/Users/Uporabnik/Documents/3. letnik/UZ/assignment_2/signal.txt')
-# k1 = gaussian_kernel(2,15)
-# k2 = np.array([0.1, 0.6, 0.4])
-# plt.subplot(1,4,1)
-# plt.plot(signal)
-# plot1 = cv2.filter2D(cv2.filter2D(signal, -1, k1), -1, k2)
-# plt.subplot(1,4,2)
-# plt.plot(plot1)
-# plot2 = cv2.filter2D(cv2.filter2D(signal, -1, k2), -1, k1)
-# plt.subplot(1,4,3)
-# plt.plot(plot2)
-# plot3 = cv2.filter2D(signal, -1, cv2.filter2D(k1, -1, k2))
-# plt.subplot(1,4,4)
-# plt.plot(plot3)
-# plt.show()
+signal = util.read_data('C:/Users/Uporabnik/Documents/3. letnik/UZ/assignment_2/signal.txt')
+k1 = gaussian_kernel(2,15)
+k2 = np.array([0.1, 0.6, 0.4])
+plt.subplot(1,4,1)
+plt.plot(signal)
+plot1 = cv2.filter2D(cv2.filter2D(signal, -1, k1), -1, k2)
+plt.subplot(1,4,2)
+plt.plot(plot1)
+plot2 = cv2.filter2D(cv2.filter2D(signal, -1, k2), -1, k1)
+plt.subplot(1,4,3)
+plt.plot(plot2)
+plot3 = cv2.filter2D(signal, -1, cv2.filter2D(k1, -1, k2))
+plt.subplot(1,4,4)
+plt.plot(plot3)
+plt.show()
 
 ##### TASK 3 #####
 # 3 a)
-# img = cv2.imread('C:/Users/Uporabnik/Documents/3. letnik/UZ/assignment_2/images/lena.png')
-# img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-# imgGN = np.copy(img)
-# imgSP = np.copy(img)
-# imgGN = util.gauss_noise(imgGN, 100)
-# imgSP = util.sp_noise(imgSP, 0.09)
-# imgGN_r = gaussfilter(np.copy(imgGN))
-# imgSP_r = gaussfilter(np.copy(imgSP))
-# plt.subplot(2,2,1)
-# plt.imshow(imgGN, cmap='gray')
-# plt.subplot(2,2,2)
-# plt.imshow(imgSP, cmap='gray')
-# plt.subplot(2,2,3)
-# plt.imshow(imgGN_r, cmap='gray')
-# plt.subplot(2,2,4)
-# plt.imshow(imgSP_r, cmap='gray')
-# plt.show()
+img = cv2.imread('C:/Users/Uporabnik/Documents/3. letnik/UZ/assignment_2/images/lena.png')
+img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+imgGN = np.copy(img)
+imgSP = np.copy(img)
+imgGN = util.gauss_noise(imgGN, 100)
+imgSP = util.sp_noise(imgSP, 0.09)
+imgGN_r = gaussfilter(np.copy(imgGN))
+imgSP_r = gaussfilter(np.copy(imgSP))
+plt.subplot(2,2,1)
+plt.imshow(imgGN, cmap='gray')
+plt.subplot(2,2,2)
+plt.imshow(imgSP, cmap='gray')
+plt.subplot(2,2,3)
+plt.imshow(imgGN_r, cmap='gray')
+plt.subplot(2,2,4)
+plt.imshow(imgSP_r, cmap='gray')
+plt.show()
 
 # 3 b)
-# I = cv2.imread('C:/Users/Uporabnik/Documents/3. letnik/UZ/assignment_2/images/museum.jpg')
-# I = cv2.cvtColor(I, cv2.COLOR_BGR2GRAY)
+I = cv2.imread('C:/Users/Uporabnik/Documents/3. letnik/UZ/assignment_2/images/museum.jpg')
+I = cv2.cvtColor(I, cv2.COLOR_BGR2GRAY)
 
-# kernel = np.array([[0,0,0], [0,2,0], [0,0,0]] - np.multiply(1/9, ([[1,1,1],[1,1,1],[1,1,1]])))
-# img = cv2.filter2D(I, -1, kernel)
-# plt.subplot(1, 2, 1)
-# plt.imshow(img, cmap='gray')
-# plt.subplot(1, 2, 2)
-# plt.imshow(I, cmap='gray')
-# plt.show()
+kernel = np.array([[0,0,0], [0,2,0], [0,0,0]] - np.multiply(1/9, ([[1,1,1],[1,1,1],[1,1,1]])))
+img = cv2.filter2D(I, -1, kernel)
+plt.subplot(1, 2, 1)
+plt.imshow(img, cmap='gray')
+plt.subplot(1, 2, 2)
+plt.imshow(I, cmap='gray')
+plt.show()
 
 # 3 c)
-# input = np.zeros(40)
-# input[15:25] = 1
-# signal = util.read_data('C:/Users/Uporabnik/Documents/3. letnik/UZ/assignment_2/signal.txt')
-# signalC = np.copy(signal)
-# plt.subplot(1,4,1)
-# plt.plot(input)
-# plt.subplot(1,4,2)
-# plt.plot(signalC)
-# signalM = simple_median(signal, 3)
-# plt.subplot(1,4,3)
-# plt.plot(signalM)
-# gk = gaussian_kernel(2, 15)
-# signalG = cv2.filter2D(signalC, -1, gk)
-# plt.subplot(1,4,4)
-# plt.plot(signalG)
-# plt.show()
+input = np.zeros(40)
+input[15:25] = 1
+signal = util.read_data('C:/Users/Uporabnik/Documents/3. letnik/UZ/assignment_2/signal.txt')
+signalC = np.copy(signal)
+plt.subplot(1,4,1)
+plt.plot(input)
+plt.subplot(1,4,2)
+plt.plot(signalC)
+signalM = simple_median(signal, 3)
+plt.subplot(1,4,3)
+plt.plot(signalM)
+gk = gaussian_kernel(2, 15)
+signalG = cv2.filter2D(signalC, -1, gk)
+plt.subplot(1,4,4)
+plt.plot(signalG)
+plt.show()
 
 # 3 d)
-# I = cv2.imread('C:/Users/Uporabnik/Documents/3. letnik/UZ/assignment_2/images/lena.png')
-# I = cv2.cvtColor(I, cv2.COLOR_BGR2GRAY)
-# I_gn = util.gauss_noise(I, 100)
-# I_sp = util.sp_noise(I, 0.1)
-# plt.subplot(2,3,1)
-# plt.imshow(I_gn, cmap='gray')
-# plt.subplot(2,3,4)
-# plt.imshow(I_sp, cmap='gray')
-# img_g_gf = np.copy(I)
-# img_sp_gf = np.copy(I)
-# img_g_mf = np.copy(I)
-# img_sp_mf = np.copy(I)
-# img_g_gf = gaussfilter(I_gn)
-# img_sp_gf = gaussfilter(I_sp)
-# img_g_mf = median(I_gn, 3)
-# img_sp_mf = median(I_sp, 3)
-# plt.subplot(2,3,2)
-# plt.imshow(img_g_gf, cmap='gray')
-# plt.subplot(2,3,3)
-# plt.imshow(img_g_mf, cmap='gray')
-# plt.subplot(2,3,5)
-# plt.imshow(img_sp_gf, cmap='gray')
-# plt.subplot(2,3,6)
-# plt.imshow(img_sp_mf, cmap='gray')
-# plt.show()
+I = cv2.imread('C:/Users/Uporabnik/Documents/3. letnik/UZ/assignment_2/images/lena.png')
+I = cv2.cvtColor(I, cv2.COLOR_BGR2GRAY)
+I_gn = util.gauss_noise(I, 100)
+I_sp = util.sp_noise(I, 0.1)
+plt.subplot(2,3,1)
+plt.imshow(I_gn, cmap='gray')
+plt.subplot(2,3,4)
+plt.imshow(I_sp, cmap='gray')
+img_g_gf = np.copy(I)
+img_sp_gf = np.copy(I)
+img_g_mf = np.copy(I)
+img_sp_mf = np.copy(I)
+img_g_gf = gaussfilter(I_gn)
+img_sp_gf = gaussfilter(I_sp)
+img_g_mf = median(I_gn, 3)
+img_sp_mf = median(I_sp, 3)
+plt.subplot(2,3,2)
+plt.imshow(img_g_gf, cmap='gray')
+plt.subplot(2,3,3)
+plt.imshow(img_g_mf, cmap='gray')
+plt.subplot(2,3,5)
+plt.imshow(img_sp_gf, cmap='gray')
+plt.subplot(2,3,6)
+plt.imshow(img_sp_mf, cmap='gray')
+plt.show()

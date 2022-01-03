@@ -24,22 +24,22 @@ def PCA(data, showEllipse):
     [U, S, V] = np.linalg.svd(cov)
     return U, S, mean
 
-# data = read_data('data/points.txt').reshape(5, 2)
-# for i in range(data.shape[0]):
-#    plt.scatter(data[i,0], data[i,1], marker = "o", color="blue") 
-# PCA(data, 1)
-# plt.show()
+data = read_data('data/points.txt').reshape(5, 2)
+for i in range(data.shape[0]):
+   plt.scatter(data[i,0], data[i,1], marker = "o", color="blue") 
+PCA(data, 1)
+plt.show()
 
 # 1b)
-# data = read_data('data/points.txt').reshape(5,2)
-# vectors, values, mean = PCA(data.copy(), 1)
-# vector1 = vectors[:,0] * values[0]
-# vector2 = vectors[:,1] * values[1]
-# for i in range(data.shape[0]):
-#     plt.scatter(data[i,0], data[i,1], marker = "o", color="blue")
-# plt.plot([mean[0],mean[0]+vector1[0]],[mean[1],mean[1]+vector1[1]])
-# plt.plot([mean[0],mean[0]+vector2[0]],[mean[1],mean[1]+vector2[1]])
-# plt.show()
+data = read_data('data/points.txt').reshape(5,2)
+vectors, values, mean = PCA(data.copy(), 1)
+vector1 = vectors[:,0] * values[0]
+vector2 = vectors[:,1] * values[1]
+for i in range(data.shape[0]):
+    plt.scatter(data[i,0], data[i,1], marker = "o", color="blue")
+plt.plot([mean[0],mean[0]+vector1[0]],[mean[1],mean[1]+vector1[1]])
+plt.plot([mean[0],mean[0]+vector2[0]],[mean[1],mean[1]+vector2[1]])
+plt.show()
 
 # 1c)
 def reconstruction_error(values):
@@ -52,23 +52,23 @@ def reconstruction_error(values):
     plt.bar(np.arange(len(values)), c_value)
     plt.show()
 
-# data = read_data('data/points.txt').reshape(5,2)
-# vectors, values, mean = PCA(data.copy(), 0)
-# reconstruction_error(values)
+data = read_data('data/points.txt').reshape(5,2)
+vectors, values, mean = PCA(data.copy(), 0)
+reconstruction_error(values)
 
 # 1d)
-# data = read_data('data/points.txt').reshape(5,2)
-# vectors, values, mean = PCA(data.copy(), 1)
-# vectors[:,1] = 0
-# vector1 = vectors[:,0] * values[0]
-# point = data.copy()
-# for i in range(data.shape[0]):
-#     point[i] = vectors.T @ (point[i] - mean)
-#     point[i] = vectors @ point[i] + mean
-#     print(point[i])
-#     plt.scatter(point[i,0], point[i,1], marker = "o", color="blue")
-# plt.plot([mean[0],mean[0]+vector1[0]],[mean[1],mean[1]+vector1[1]])
-# plt.show()
+data = read_data('data/points.txt').reshape(5,2)
+vectors, values, mean = PCA(data.copy(), 1)
+vectors[:,1] = 0
+vector1 = vectors[:,0] * values[0]
+point = data.copy()
+for i in range(data.shape[0]):
+    point[i] = vectors.T @ (point[i] - mean)
+    point[i] = vectors @ point[i] + mean
+    print(point[i])
+    plt.scatter(point[i,0], point[i,1], marker = "o", color="blue")
+plt.plot([mean[0],mean[0]+vector1[0]],[mean[1],mean[1]+vector1[1]])
+plt.show()
 
 # 1e)
 def get_distance(data, point):
@@ -81,21 +81,21 @@ def get_distance(data, point):
             closest_point = data[i,:]
     return closest_point
 
-# point = np.array([3, 6])
-# data = read_data('data/points.txt').reshape(5,2)
-# first_point = get_distance(data, point)
-# data = np.append(data, [point.T]).reshape(6,2)
-# vectors, values, mean = PCA(data.copy(), 0)
-# vectors[0,:] = 0
-# points = data.copy()
-# for i in range(data.shape[0]):
-#     points[i] = vectors.T  @ (points[i]-mean)
-#     points[i] = vectors @ points[i] + mean
-# points = points[:5,:]
-# index = get_distance(points, point)
-# indexOG = np.where((points == (index)).all(axis=1))
-# print(data[indexOG])
-# print(first_point)
+point = np.array([3, 6])
+data = read_data('data/points.txt').reshape(5,2)
+first_point = get_distance(data, point)
+data = np.append(data, [point.T]).reshape(6,2)
+vectors, values, mean = PCA(data.copy(), 0)
+vectors[0,:] = 0
+points = data.copy()
+for i in range(data.shape[0]):
+    points[i] = vectors.T  @ (points[i]-mean)
+    points[i] = vectors @ points[i] + mean
+points = points[:5,:]
+index = get_distance(points, point)
+indexOG = np.where((points == (index)).all(axis=1))
+print(data[indexOG])
+print(first_point)
 
 #### TASK 2 ####
 
@@ -108,26 +108,26 @@ def dualPCA(data):
     U = np.dot(data.T, U) * np.sqrt(1 / (S*(data.shape[1]-1)))
     return U, S, mean
 
-# data = read_data('data/points.txt').reshape(5,2)
-# vectors, values, mean = dualPCA(data)
-# vector1 = vectors[:,0] * values[0]
-# vector2 = vectors[:,1] * values[1]
-# for i in range(data.shape[0]):
-#     plt.scatter(data[i,0], data[i,1], marker = "o", color="blue")
-# plt.plot([mean[0],mean[0]+vector1[0]],[mean[1],mean[1]+vector1[1]])
-# plt.plot([mean[0],mean[0]+vector2[0]],[mean[1],mean[1]+vector2[1]])
-# plt.show()
+data = read_data('data/points.txt').reshape(5,2)
+vectors, values, mean = dualPCA(data)
+vector1 = vectors[:,0] * values[0]
+vector2 = vectors[:,1] * values[1]
+for i in range(data.shape[0]):
+    plt.scatter(data[i,0], data[i,1], marker = "o", color="blue")
+plt.plot([mean[0],mean[0]+vector1[0]],[mean[1],mean[1]+vector1[1]])
+plt.plot([mean[0],mean[0]+vector2[0]],[mean[1],mean[1]+vector2[1]])
+plt.show()
 
 # # 2b)
-# data = read_data('data/points.txt').reshape(5, 2)
-# U, S, mean = dualPCA(data.copy())
-# points = data.copy()
-# U = U[:,:2]
-# for i in range(data.shape[0]):
-#     points[i] = np.dot(U.T, (points[i]-mean))
-# for i in range(data.shape[0]):
-#     points[i] = (np.dot(U, points[i]) + mean)
-# print(points)
+data = read_data('data/points.txt').reshape(5, 2)
+U, S, mean = dualPCA(data.copy())
+points = data.copy()
+U = U[:,:2]
+for i in range(data.shape[0]):
+    points[i] = np.dot(U.T, (points[i]-mean))
+for i in range(data.shape[0]):
+    points[i] = (np.dot(U, points[i]) + mean)
+print(points)
 
 #### TASK 3 ####
 # 3a)
@@ -185,11 +185,11 @@ def transformations(image, mean, U):
     plt.show()
 
 # 3b)
-# folder = 'data/faces/1'
-# data = preprocess(folder)
-# U, S, mean = dualPCA_img(data.copy())
-# firstFive(U)
-# transformations(data[:,0], mean, U)
+folder = 'data/faces/1'
+data = preprocess(folder)
+U, S, mean = dualPCA_img(data.copy())
+firstFive(U)
+transformations(data[:,0], mean, U)
 
 # 3c) 
 def reconstruction(n, image, U, mean):
@@ -206,10 +206,10 @@ def num_of_comp(image, U, mean):
         plt.imshow(img, cmap='gray', vmax=255, vmin=0)
     plt.show()
 
-# folder = 'data/faces/2'
-# data = preprocess(folder)
-# U, S, mean = dualPCA_img(data.copy())
-# num_of_comp(data[:,0], U, mean)
+folder = 'data/faces/2'
+data = preprocess(folder)
+U, S, mean = dualPCA_img(data.copy())
+num_of_comp(data[:,0], U, mean)
 
 # 3 d)
 def informativeness(avg_img, U, mean):
@@ -225,11 +225,11 @@ def informativeness(avg_img, U, mean):
     
     plt.show()
 
-# folder = 'data/faces/2'
-# data = preprocess(folder)
-# U, S, mean = dualPCA_img(data.copy())
-# avg_img = U.T @ (mean-mean)
-# informativeness(avg_img.copy(), U, mean)
+folder = 'data/faces/2'
+data = preprocess(folder)
+U, S, mean = dualPCA_img(data.copy())
+avg_img = U.T @ (mean-mean)
+informativeness(avg_img.copy(), U, mean)
 
 # 3 e)
 def transform_foreign(image, U, mean):
@@ -238,17 +238,17 @@ def transform_foreign(image, U, mean):
     image = image.reshape((96, 84))
     return image
 
-# folder = 'data/faces/1'
-# data = preprocess(folder)
-# U, S, mean = dualPCA_img(data.copy())
-# foreign_img = cv2.imread('data/elephant.jpg')
-# foreign_img = foreign_img[:, :, 0]
-# img = transform_foreign(foreign_img.copy().reshape(-1), U, mean)
-# plt.subplot(1,2,1)
-# plt.imshow(foreign_img, cmap='gray')
-# plt.subplot(1,2,2)
-# plt.imshow(img, cmap='gray', vmin=0, vmax=255)
-# plt.show()
+folder = 'data/faces/1'
+data = preprocess(folder)
+U, S, mean = dualPCA_img(data.copy())
+foreign_img = cv2.imread('data/elephant.jpg')
+foreign_img = foreign_img[:, :, 0]
+img = transform_foreign(foreign_img.copy().reshape(-1), U, mean)
+plt.subplot(1,2,1)
+plt.imshow(foreign_img, cmap='gray')
+plt.subplot(1,2,2)
+plt.imshow(img, cmap='gray', vmin=0, vmax=255)
+plt.show()
 
 # 3g)
 def lda(data):
@@ -266,35 +266,35 @@ def lda(data):
     [U, S, V] = np.linalg.svd(np.linalg.inv(sw) @ sb)
     return U
 
-# data = np.zeros((8064, 64*3))
+data = np.zeros((8064, 64*3))
 
-# for i in range(1,4,1):
-#     folder = 'data/faces/'+ str(i)
-#     imgs = preprocess(folder)
-#     data[:, (64*(i-1)):(64*i)] = imgs
+for i in range(1,4,1):
+    folder = 'data/faces/'+ str(i)
+    imgs = preprocess(folder)
+    data[:, (64*(i-1)):(64*i)] = imgs
 
-# data = data/np.max(data)
-# U, S, mean = dualPCA_img(data.copy())
-# mean = mean.reshape((-1,1))
-# dataPCA = U.T @ (data - mean)
-# plt.subplot(1,2,1)
-# for i in range(data.shape[1]):
-#     if(i < 64):
-#         plt.scatter(dataPCA[0,i], dataPCA[1,i], marker = "o", color="blue")
-#     elif(i >= 64 and i < 128 ):
-#         plt.scatter(dataPCA[0,i], dataPCA[1,i], marker = "o", color="red")
-#     else:
-#         plt.scatter(dataPCA[0,i], dataPCA[1,i], marker = "o", color="green")
+data = data/np.max(data)
+U, S, mean = dualPCA_img(data.copy())
+mean = mean.reshape((-1,1))
+dataPCA = U.T @ (data - mean)
+plt.subplot(1,2,1)
+for i in range(data.shape[1]):
+    if(i < 64):
+        plt.scatter(dataPCA[0,i], dataPCA[1,i], marker = "o", color="blue")
+    elif(i >= 64 and i < 128 ):
+        plt.scatter(dataPCA[0,i], dataPCA[1,i], marker = "o", color="red")
+    else:
+        plt.scatter(dataPCA[0,i], dataPCA[1,i], marker = "o", color="green")
 
-# mean2 = np.mean(dataPCA, axis=1, keepdims=True)
-# U_lda = lda(dataPCA[:10,:].copy())
-# dataLDA = U_lda.T @ (dataPCA - mean2)[:10]
-# plt.subplot(1,2,2)
-# for i in range(data.shape[1]):
-#     if(i < 64):
-#         plt.scatter(dataLDA[0,i], dataLDA[1,i], marker = "o", color="blue")
-#     elif(i >= 64 and i < 128 ):
-#         plt.scatter(dataLDA[0,i], dataLDA[1,i], marker = "o", color="red")
-#     else:
-#         plt.scatter(dataLDA[0,i], dataLDA[1,i], marker = "o", color="green")
-# plt.show()
+mean2 = np.mean(dataPCA, axis=1, keepdims=True)
+U_lda = lda(dataPCA[:10,:].copy())
+dataLDA = U_lda.T @ (dataPCA - mean2)[:10]
+plt.subplot(1,2,2)
+for i in range(data.shape[1]):
+    if(i < 64):
+        plt.scatter(dataLDA[0,i], dataLDA[1,i], marker = "o", color="blue")
+    elif(i >= 64 and i < 128 ):
+        plt.scatter(dataLDA[0,i], dataLDA[1,i], marker = "o", color="red")
+    else:
+        plt.scatter(dataLDA[0,i], dataLDA[1,i], marker = "o", color="green")
+plt.show()
